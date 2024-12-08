@@ -2,3 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+:root {
+    --background: 225 33% 97%; /* Tokyonight: bg_light */
+    --foreground: 222 13% 18%; /* Tokyonight: fg_dark */
+    --card: 225 33% 97%; /* Same as background */
+    --card-foreground: 222 13% 18%; /* Same as foreground */
+    --popover: 225 33% 97%; /* Same as background */
+    --popover-foreground: 222 13% 18%; /* Same as foreground */
+    --primary: 222 87% 66%; /* Tokyonight: blue */
+    --primary-foreground: 222 13% 18%; /* Contrast with primary */
+    --secondary: 261 51% 59%; /* Tokyonight: purple */
+    --secondary-foreground: 222 13% 18%; /* Matches foreground */
+    --muted: 225 28% 92%; /* Tokyonight: bg_highlight_light */
+    --muted-foreground: 222 13% 50%; /* Muted but readable */
+    --accent: 48 93% 60%; /* Tokyonight: yellow */
+    --accent-foreground: 222 13% 18%; /* Contrast with accent */
+    --destructive: 0 74% 61%; /* Tokyonight: red */
+    --destructive-foreground: 225 33% 97%; /* Light background contrast */
+    --border: 225 28% 87%; /* Subtle border */
+    --input: 225 28% 87%; /* Matches border */
+    --ring: 222 87% 66%; /* Tokyonight: blue */
+    --radius: 0.75rem; /* Unchanged */
+    --chart-1: 222 87% 66%; /* Tokyonight: blue */
+    --chart-2: 160 56% 65%; /* Tokyonight: green */
+    --chart-3: 48 93% 60%; /* Tokyonight: yellow */
+    --chart-4: 261 51% 59%; /* Tokyonight: purple */
+    --chart-5: 0 74% 61%; /* Tokyonight: red */
+  }
+
+  .dark {
+    --background: 222 28% 12%; /* Tokyonight: bg */
+    --foreground: 222 13% 82%; /* Tokyonight: fg */
+    --card: 222 28% 12%; /* Same as background */
+    --card-foreground: 222 13% 82%; /* Same as foreground */
+    --popover: 222 28% 12%; /* Same as background */
+    --popover-foreground: 222 13% 82%; /* Same as foreground */
+    --primary: 222 87% 66%; /* Tokyonight: blue */
+    --primary-foreground: 222 28% 16%; /* Contrast with primary */
+    --secondary: 261 51% 59%; /* Tokyonight: purple */
+    --secondary-foreground: 222 13% 82%; /* Matches foreground */
+    --muted: 222 20% 20%; /* Tokyonight: bg_highlight */
+    --muted-foreground: 222 13% 82%; /* Matches foreground */
+    --accent: 48 93% 60%; /* Tokyonight: yellow */
+    --accent-foreground: 222 28% 16%; /* Contrast with accent */
+    --destructive: 0 74% 61%; /* Tokyonight: red */
+    --destructive-foreground: 222 13% 82%; /* Matches foreground */
+    --border: 222 20% 20%; /* Tokyonight: bg_highlight */
+    --input: 222 20% 20%; /* Same as border */
+    --ring: 222 87% 66%; /* Tokyonight: blue */
+    --chart-1: 222 87% 66%; /* Tokyonight: blue */
+    --chart-2: 160 56% 65%; /* Tokyonight: green */
+    --chart-3: 48 93% 60%; /* Tokyonight: yellow */
+    --chart-4: 261 51% 59%; /* Tokyonight: purple */
+    --chart-5: 0 74% 61%; /* Tokyonight: red */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
