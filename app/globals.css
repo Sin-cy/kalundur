@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-:root {
+  :root {
     --background: 225 33% 97%; /* Tokyonight: bg_light */
     --foreground: 222 13% 18%; /* Tokyonight: fg_dark */
     --card: 225 33% 97%; /* Same as background */
@@ -16,7 +16,7 @@
     --secondary-foreground: 222 13% 18%; /* Matches foreground */
     --muted: 225 28% 92%; /* Tokyonight: bg_highlight_light */
     --muted-foreground: 222 13% 50%; /* Muted but readable */
-    --accent: 48 93% 60%; /* Tokyonight: yellow */
+    --accent: 174 64% 60%; /* Tokyonight: teal (replaces yellow) */
     --accent-foreground: 222 13% 18%; /* Contrast with accent */
     --destructive: 0 74% 61%; /* Tokyonight: red */
     --destructive-foreground: 225 33% 97%; /* Light background contrast */
@@ -26,7 +26,7 @@
     --radius: 0.75rem; /* Unchanged */
     --chart-1: 222 87% 66%; /* Tokyonight: blue */
     --chart-2: 160 56% 65%; /* Tokyonight: green */
-    --chart-3: 48 93% 60%; /* Tokyonight: yellow */
+    --chart-3: 174 64% 60%; /* Tokyonight: teal (replaces yellow) */
     --chart-4: 261 51% 59%; /* Tokyonight: purple */
     --chart-5: 0 74% 61%; /* Tokyonight: red */
   }
@@ -44,7 +44,7 @@
     --secondary-foreground: 222 13% 82%; /* Matches foreground */
     --muted: 222 20% 20%; /* Tokyonight: bg_highlight */
     --muted-foreground: 222 13% 82%; /* Matches foreground */
-    --accent: 48 93% 60%; /* Tokyonight: yellow */
+    --accent: 174 64% 60%; /* Tokyonight: teal (replaces yellow) */
     --accent-foreground: 222 28% 16%; /* Contrast with accent */
     --destructive: 0 74% 61%; /* Tokyonight: red */
     --destructive-foreground: 222 13% 82%; /* Matches foreground */
@@ -53,7 +53,7 @@
     --ring: 222 87% 66%; /* Tokyonight: blue */
     --chart-1: 222 87% 66%; /* Tokyonight: blue */
     --chart-2: 160 56% 65%; /* Tokyonight: green */
-    --chart-3: 48 93% 60%; /* Tokyonight: yellow */
+    --chart-3: 174 64% 60%; /* Tokyonight: teal (replaces yellow) */
     --chart-4: 261 51% 59%; /* Tokyonight: purple */
     --chart-5: 0 74% 61%; /* Tokyonight: red */
   }
