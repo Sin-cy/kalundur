@@ -15,6 +15,7 @@ datasource db {
     url           = env("DATABASE_URL")
     directUrl     = env("DIRECT_URL")
 }
+
 // model is basically a table in Prisma
 model User {
   id            String          @id @default(cuid())
