@@ -1,4 +1,3 @@
-// dashboard is in a route as a page , so must export default
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -19,10 +18,34 @@ import {
 
 import { signOut } from "../utils/auth";
 import { requireUser } from "../utils/hooks";
+import prisma from "../utils/db";
+import { redirect } from "next/navigation";
+
+// setup redirecting user to onboarding
+// if they dont have a username setup on their account
+async function getData(userId: string ) {
+  const data = await prisma.user.findUnique({
+    // how do we get the user id
+    // we have a const session = requireUser() hook
+    // inside the session we have an id which we can again get through the params
+    where: {
+      id: userId, 
+    },
+    // now to grab the userId from our supabase database through Prisma
+    select: {
+      userName: true,
+    }
+  })
+
+  if(!data?.userName) {
+    return redirect("/onboarding")
+  }
+  return data
+}
 
 // our children is the page.tsx
 // seems to be the children of the layout.tsx by default
-//
+// dashboard is in a route as a page , so must export default
 export default async function DashboardLayout({
     children,
 }: {
@@ -30,6 +53,8 @@ export default async function DashboardLayout({
 }) {
     // grabbing the user image from the session using the hook we wrote in our utils/hooks
     const session = await requireUser();
+
+    const data = await getData(session.user?.id as string)
 
     return (
         <>

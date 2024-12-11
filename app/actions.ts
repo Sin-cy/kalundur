@@ -5,6 +5,7 @@ import prisma from "./utils/db"
 import { requireUser } from "./utils/hooks"
 import { parseWithZod } from '@conform-to/zod'
 import { onboardingSchemaValidation } from "./utils/zodSchemas"
+import { redirect } from "next/navigation"
 
 
 // becuz this is not our Routes like /dashboard or /onboarding
@@ -49,7 +50,7 @@ export async function OnboardingAction(prevState: any , formData: FormData) { //
     // submission can only have two results
     // check if the submission is a success or a fail
     if(submission.status !== "success"){
-        return submission.reply() // this return error message should also be show on the Client Side
+        return submission.reply() // this returns error message should also be show on the Client Side
         // using the React 19 hook serverActionState() 
         // we can grab this onto our Client Side Page Form /onboarding
     }
@@ -71,13 +72,10 @@ export async function OnboardingAction(prevState: any , formData: FormData) { //
             name: submission.value.fullName,
         }
     })
-    console.log("Session object:", session);
-    // Return a success response to the client
-    // return {
-    //     status: "success",
-    //     message: "Profile updated successfully",
-    //     data, // Optionally include updated user data
-    // };
+    // now when the submit button is finished (done with the onboarding forms)
+    // also need to redirect the user back to the /dashboard route from /onboarding
+    // by using redirect from next navigation
+    return redirect("/dashboard")
 
  }
 
