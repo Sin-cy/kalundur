@@ -20,7 +20,7 @@ export function AuthModal() {
         <DialogHeader className="flex flex-row justify-center items-center gap-3">
           <Image src={Logo} alt="Logo" className="size-10" />
           <h4 className="text-3xl font-semibold">
-            Caly<span className="text-primary">Wiz</span>
+            Kalundur<span className="text-primary">Wiz</span>
           </h4>
         </DialogHeader>
         <div className="flex flex-col mt-5 gap-3">

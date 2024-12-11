@@ -70,7 +70,7 @@ export default async function DashboardLayout({
                                     className="size-8 "
                                 />
                                 <p className="text-xl font-bold">
-                                    Caly 
+                                    Kalundur 
                                     <span className="text-primary ">Wiz</span>
                                 </p>
                             </Link>
