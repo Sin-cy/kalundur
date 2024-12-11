@@ -13,7 +13,7 @@ export function Navbar() {
             <Link href="/" className="flex gap-3 items-center ">
                 <Image src={Logo} alt="Logo" className="size-10 "/>
                 <h4 className="text-3xl font-bold ">
-                    Kal<span className="text-[#5D8AF4]">lunDur</span>
+                    Caly<span className="text-[#5D8AF4]">Wiz</span>
                 </h4>
             </Link>
 

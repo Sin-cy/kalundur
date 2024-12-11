@@ -45,8 +45,8 @@ export default async function DashboardLayout({
                                     className="size-8 "
                                 />
                                 <p className="text-xl font-bold">
-                                    Kal
-                                    <span className="text-primary ">unDur</span>
+                                    Caly 
+                                    <span className="text-primary ">Wiz</span>
                                 </p>
                             </Link>
                         </div>

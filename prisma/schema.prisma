@@ -16,10 +16,15 @@ datasource db {
     directUrl     = env("DIRECT_URL")
 }
 
-// model is basically a table in Prisma
+// NOTE: model is basically a table in Prisma
 model User {
   id            String          @id @default(cuid())
   name          String?
+  // the String? for usrname is important
+  // this tells prisma that when ever we create a username, it does not have to be defined at the start
+  // or like we dont need the initial render
+  // also the username must be @unique for each user 
+  userName      String?         @unique
   email         String          @unique
   emailVerified DateTime?
   image         String?
