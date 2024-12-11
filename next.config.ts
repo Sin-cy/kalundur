@@ -1,7 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https", // Specify the protocol (http/https)
+                hostname: "lh3.googleusercontent.com", // Specify the hostname
+                pathname: "/**", // Use `/**` to allow all paths under this domain
+            },
+        ], // Add any other domains if needed
+    },
+    /* config options here */
 };
 
 export default nextConfig;
