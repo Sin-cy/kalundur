@@ -4,8 +4,6 @@
 
 import Nylas from "nylas";
 
-
-
 // adding ! will tell ts that this these NylasAPIs are already defined
 export const nylas = new Nylas({
   apiKey: process.env.NYLAS_API_SECRET_KEY!,
@@ -13,7 +11,7 @@ export const nylas = new Nylas({
 })   
 
 // creating another object to use for client GET()
-// we have to create the clientid and redirecturi in the .env
+// we have to create the clientid and redirectUri in the .env
 export const nylasConfig = {
     clientId: process.env.NYLAS_CLIENT_ID!,
     redirectUri: process.env.NEXT_PUBLIC_URL! + "/api/oauth/exchange", // do not misspell this addition route
