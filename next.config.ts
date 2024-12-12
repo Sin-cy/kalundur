@@ -8,7 +8,13 @@ const nextConfig: NextConfig = {
                 hostname: "lh3.googleusercontent.com", // Specify the hostname
                 pathname: "/**", // Use `/**` to allow all paths under this domain
             },
-        ], // Add any other domains if needed
+            {
+                protocol: "https",
+                hostname: "utfs.io",
+                pathname: "/**",
+            },
+            // Add any other domains if needed
+        ], 
     },
     /* config options here */
 };
