@@ -25,6 +25,9 @@ model User {
   // or like we dont need the initial render
   // also the username must be @unique for each user 
   userName      String?         @unique
+  // added grantId and Email for Nylas authentications
+  grantId       String?         
+  grantEmail    String?
   email         String          @unique
   emailVerified DateTime?
   image         String?

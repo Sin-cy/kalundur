@@ -4,7 +4,7 @@
 import prisma from "./utils/db"
 import { requireUser } from "./utils/hooks"
 import { parseWithZod } from '@conform-to/zod'
-import { onboardingSchemaValidation } from "./utils/zodSchemas"
+import { onboardingSchemaValidation, settingsSchema } from "./utils/zodSchemas"
 import { redirect } from "next/navigation"
 
 
@@ -12,7 +12,8 @@ import { redirect } from "next/navigation"
 // we dont have to use a export default
 // we can just run this as a normal async export (async is a must)
 
-// NOTE: the reason we added prevState
+// NOTE: Server action for Onboarding
+// the reason we added prevState
 // after we submit the form out prevSate will become the new initial current state
 export async function OnboardingAction(prevState: any , formData: FormData) { // typescript has an interface of FormData that lets us easily create key value pairs like in form.
     // when updating a user
@@ -75,8 +76,50 @@ export async function OnboardingAction(prevState: any , formData: FormData) { //
     // now when the submit button is finished (done with the onboarding forms)
     // also need to redirect the user back to the /dashboard route from /onboarding
     // by using redirect from next navigation
-    return redirect("/dashboard")
+    // ** return redirect("/dashboard") **
+    // NOTE : But now that the /onboarding/grant-id route is ready 
+    // when the user has created the first on boarding route, we will now 
+    // redirect the user to the /onboarding/grant-id route directly
+    // to connect their calendar with Nylas right away
 
- }
+    return redirect("/onboarding/grant-id")
+}
+
+// NOTE: Server Action for Save Settings Buttons
+// this is not a route - no need for export default
+// for the params we will use the formData with the FormData type provided by TS
+export async function SettingsAction(prevState: any, formData: FormData) {
+    // check for only authenticated user access
+    // grab our User session Data
+    const session = await requireUser()
+
+    // compare our formData with Zod Schema ( ** formData is basically our Prisma Schema ** )
+    const submission = parseWithZod(formData, {
+        // this line specifies the schema we want to use from zodSchema.ts
+        // which is the settingSchema = z.object({}) we just created
+        schema: settingsSchema , 
+    }) 
+
+    // check block
+    // parseWithZod() returns either true or false
+    if( submission.status !== "success" ){
+        return submission.reply()
+    }
+     
+    const user = await prisma.user.update({
+        where: { //tell prisma what condition to update
+            id : session.user?.id ,
+        },
+        data: { //tells prisma which data we wanna update based on the schema data specified from zodSchema
+            // the key (name & image) properties correspond to our prisma User Schema.
+            name: submission.value.fullName , // NOTE: why do we need .value to access zod properites ???
+            image: submission.value.profileImage , 
+        }
+    })
+
+    // redirect user back to a specific page
+    return redirect("/dashboard") ;
+    
+}
 
 

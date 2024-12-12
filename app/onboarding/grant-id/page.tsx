@@ -6,7 +6,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { TextEffect } from "@/components/ui/text-effect";
-import VideoGid from '@/public/'
+import VideoGif from '@/public/'
 import { CalendarHeartIcon } from "lucide-react";
 import Link from "next/link";
 
