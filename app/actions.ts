@@ -1,12 +1,11 @@
-"use server"
+"use server";
 // always create this when we want to run a server action similar to our inline server action
 
-import prisma from "./utils/db"
-import { requireUser } from "./utils/hooks"
-import { parseWithZod } from '@conform-to/zod'
-import { onboardingSchemaValidation, settingsSchema } from "./utils/zodSchemas"
-import { redirect } from "next/navigation"
-
+import prisma from "./utils/db";
+import { requireUser } from "./utils/hooks";
+import { parseWithZod } from "@conform-to/zod";
+import { onboardingSchemaValidation, settingsSchema } from "./utils/zodSchemas";
+import { redirect } from "next/navigation";
 
 // becuz this is not our Routes like /dashboard or /onboarding
 // we dont have to use a export default
@@ -15,18 +14,19 @@ import { redirect } from "next/navigation"
 // NOTE: Server action for Onboarding
 // the reason we added prevState
 // after we submit the form out prevSate will become the new initial current state
-export async function OnboardingAction(prevState: any , formData: FormData) { // typescript has an interface of FormData that lets us easily create key value pairs like in form.
+export async function OnboardingAction(prevState: any, formData: FormData) {
+    // typescript has an interface of FormData that lets us easily create key value pairs like in form.
     // when updating a user
     // to pass in what user or which user to update
     // typically ,its with a unqiue id that matches our user
     // we can grab the user id from
-    const session = await requireUser()  // this gives us access to the user data from our Prisma db
-    
+    const session = await requireUser(); // this gives us access to the user data from our Prisma db
+
     // validating conform with zod schema
     // parseWithZod this checks our formData with the zod schema we created
     // const submission = parseWithZod(formData, {
     //     schema: onboardingSchema,
-    // }) 
+    // })
     // HACK: we need to write it differently now because we added a new function
     // inside the zodSchema to check for a unique username
     const submission = await parseWithZod(formData, {
@@ -37,22 +37,22 @@ export async function OnboardingAction(prevState: any , formData: FormData) { //
             // if its false we return true
             async isUsernameUnique() {
                 const existingUsername = await prisma.user.findUnique({
-                    where : {
-                        userName: formData.get('userName') as string, // the get 'username' must match the zodSchema
-                    }
-                })
+                    where: {
+                        userName: formData.get("userName") as string, // the get 'username' must match the zodSchema
+                    },
+                });
                 return !existingUsername; // ! is logical not used in TS
             },
         }),
         // marks async as boolean of true
         async: true, // if we dont add this it will complain about the await at submission
-    })
+    });
 
     // submission can only have two results
     // check if the submission is a success or a fail
-    if(submission.status !== "success"){
-        return submission.reply() // this returns error message should also be show on the Client Side
-        // using the React 19 hook serverActionState() 
+    if (submission.status !== "success") {
+        return submission.reply(); // this returns error message should also be show on the Client Side
+        // using the React 19 hook serverActionState()
         // we can grab this onto our Client Side Page Form /onboarding
     }
 
@@ -91,35 +91,34 @@ export async function OnboardingAction(prevState: any , formData: FormData) { //
 export async function SettingsAction(prevState: any, formData: FormData) {
     // check for only authenticated user access
     // grab our User session Data
-    const session = await requireUser()
+    const session = await requireUser();
 
     // compare our formData with Zod Schema ( ** formData is basically our Prisma Schema ** )
     const submission = parseWithZod(formData, {
         // this line specifies the schema we want to use from zodSchema.ts
         // which is the settingSchema = z.object({}) we just created
-        schema: settingsSchema , 
-    }) 
+        schema: settingsSchema,
+    });
 
     // check block
     // parseWithZod() returns either true or false
-    if( submission.status !== "success" ){
-        return submission.reply()
+    if (submission.status !== "success") {
+        return submission.reply();
     }
-     
+
     const user = await prisma.user.update({
-        where: { //tell prisma what condition to update
-            id : session.user?.id ,
+        where: {
+            //tell prisma what condition to update
+            id: session.user?.id,
         },
-        data: { //tells prisma which data we wanna update based on the schema data specified from zodSchema
+        data: {
+            //tells prisma which data we wanna update based on the schema data specified from zodSchema
             // the key (name & image) properties correspond to our prisma User Schema.
-            name: submission.value.fullName , // NOTE: why do we need .value to access zod properites ???
-            image: submission.value.profileImage , 
-        }
-    })
+            name: submission.value.fullName, // NOTE: why do we need .value to access zod properites ???
+            image: submission.value.profileImage,
+        },
+    });
 
     // redirect user back to a specific page
-    return redirect("/dashboard") ;
-    
+    return redirect("/dashboard");
 }
-
-

@@ -7,7 +7,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import prisma from "./db"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-    // grabs the our data from Prisma schema
+    // adapter: grabs the our data from Prisma schema
     adapter: PrismaAdapter(prisma),
     providers: [GitHub, Google],
 })
