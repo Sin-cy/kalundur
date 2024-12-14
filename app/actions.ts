@@ -6,6 +6,7 @@ import { requireUser } from "./utils/hooks";
 import { parseWithZod } from "@conform-to/zod";
 import { onboardingSchemaValidation, settingsSchema } from "./utils/zodSchemas";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 // becuz this is not our Routes like /dashboard or /onboarding
 // we dont have to use a export default
@@ -77,37 +78,37 @@ export async function OnboardingAction(prevState: any, formData: FormData) {
                     data: [
                         {
                             day: "Monday",
-                            fromTime: "8:00",
+                            fromTime: "08:00",
                             tillTime: "18:00",
                         },
                         {
                             day: "Tuesday",
-                            fromTime: "8:00",
+                            fromTime: "08:00",
                             tillTime: "18:00",
                         },
                         {
                             day: "Wednesday",
-                            fromTime: "8:00",
+                            fromTime: "08:00",
                             tillTime: "18:00",
                         },
                         {
                             day: "Thursday",
-                            fromTime: "8:00",
+                            fromTime: "08:00",
                             tillTime: "18:00",
                         },
                         {
                             day: "Friday",
-                            fromTime: "8:00",
+                            fromTime: "08:00",
                             tillTime: "18:00",
                         },
                         {
                             day: "Saturday",
-                            fromTime: "8:00",
+                            fromTime: "08:00",
                             tillTime: "18:00",
                         },
                         {
                             day: "Sunday",
-                            fromTime: "8:00",
+                            fromTime: "08:00",
                             tillTime: "18:00",
                         },
                     ],
@@ -163,4 +164,55 @@ export async function SettingsAction(prevState: any, formData: FormData) {
 
     // redirect user back to a specific page
     return redirect("/dashboard");
+}
+
+// NOTE: server action for the Save Changes button in availability page
+
+export async function updateAvailabilityAction( formData: FormData ) {
+    const session = await requireUser(); // this makes sure only authenticated users are allowed to save changes
+
+    // this takes our formData and conver into an object where the arrays
+    // the 1st element becomes the key, the 2nd becomes the value
+    const rawData = Object.fromEntries(formData.entries());
+
+    const availabilityData = Object.keys(rawData) // this gets the keys from our rawData
+    .filter((key) => key.startsWith("id-")) // filter the keys to the one that starts with `id-` which is the <input type='hidden'> we created
+    .map((key) => { 
+        // remove `id-` from prefix & grab the id which is ${item.id} in the <input>
+        const id = key.replace("id-", "") 
+
+        return { 
+            id, // basically the id of the item (which is the same id of the object of is isActive,fromTime,tillTime) 
+            // added in Switch and Select Components
+
+            // the <Switch> only returns string (true returns on, false returns undefined) 
+            isActive: rawData[`isActive-${id}`] === "on", 
+
+            fromTime: rawData[`fromTime-${id}`] as string,  
+            tillTime: rawData[`tillTime-${id}`] as string,
+            // HACK: in simple terms these are just sorting
+            // All return corresponds to the same availability data/object
+        }
+    })
+
+    try {
+        await prisma.$transaction(
+            availabilityData.map((item) => prisma.availability.update({
+                where : {
+                    id: item.id,
+                },
+                data : {
+                    isActive: item.isActive,
+                    fromTime: item.fromTime,
+                    tillTime: item.tillTime,
+                }
+            }))
+        )
+
+        // revalidatePath("/dashboard/availability");
+
+    } catch (error) {
+        console.log(error)
+    }
+
 }
