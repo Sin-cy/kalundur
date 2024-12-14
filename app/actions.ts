@@ -60,29 +60,71 @@ export async function OnboardingAction(prevState: any, formData: FormData) {
         // the question is how do we get the id of the user
         // remembering our hook requireUser() that we created at the start
         // this checks the condition for update
-        where : {
-            id: session.user?.id
+        where: {
+            id: session.user?.id,
         },
         // NOTE: this is the data we want to update
         // but remember, we need the form input data to be right here
         // how do we get those values?
         // by specifying an argument to this function (ps. and its typescript)
         // ts provides a default Interface `FormData` which is a key value pairts to use as a type for Forms
-        data : {
+        data: {
             userName: submission.value.userName, // using submission after checking conform with zod
             name: submission.value.fullName,
-        }
-    })
+            // creating the default availability data when user comes Onboard
+            availability: {
+                createMany: {
+                    data: [
+                        {
+                            day: "Monday",
+                            fromTime: "8:00",
+                            tillTime: "18:00",
+                        },
+                        {
+                            day: "Tuesday",
+                            fromTime: "8:00",
+                            tillTime: "18:00",
+                        },
+                        {
+                            day: "Wednesday",
+                            fromTime: "8:00",
+                            tillTime: "18:00",
+                        },
+                        {
+                            day: "Thursday",
+                            fromTime: "8:00",
+                            tillTime: "18:00",
+                        },
+                        {
+                            day: "Friday",
+                            fromTime: "8:00",
+                            tillTime: "18:00",
+                        },
+                        {
+                            day: "Saturday",
+                            fromTime: "8:00",
+                            tillTime: "18:00",
+                        },
+                        {
+                            day: "Sunday",
+                            fromTime: "8:00",
+                            tillTime: "18:00",
+                        },
+                    ],
+                },
+            },
+        },
+    });
     // now when the submit button is finished (done with the onboarding forms)
     // also need to redirect the user back to the /dashboard route from /onboarding
     // by using redirect from next navigation
     // ** return redirect("/dashboard") **
-    // NOTE : But now that the /onboarding/grant-id route is ready 
-    // when the user has created the first on boarding route, we will now 
+    // NOTE : But now that the /onboarding/grant-id route is ready
+    // when the user has created the first on boarding route, we will now
     // redirect the user to the /onboarding/grant-id route directly
     // to connect their calendar with Nylas right away
 
-    return redirect("/onboarding/grant-id")
+    return redirect("/onboarding/grant-id");
 }
 
 // NOTE: Server Action for Save Settings Buttons

@@ -17,6 +17,7 @@ datasource db {
 }
 
 // NOTE: model is basically a table in Prisma
+// Its always an uppercase when creating a model
 model User {
   id            String          @id @default(cuid())
   name          String?
@@ -33,6 +34,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  availability  Availability[]
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -77,6 +79,34 @@ model VerificationToken {
  
   @@id([identifier, token])
 }
+
+// **** Table for Availability Route 
+model Availability {
+    id          String      @id @default(uuid()) 
+
+    day         Day
+    fromTime    String
+    tillTime    String
+    isActive    Boolean     @default(true)
+
+    createdAt   DateTime    @default(now()) 
+    updatedAt   DateTime    @updatedAt
+    User        User?       @relation(fields: [userId] , references: [id] )
+    userId      String?
+}
+
+enum Day {
+    Monday
+    Tuesday
+    Wednesday
+    Thursday
+    Friday
+    Saturday
+    Sunday
+}
+
+// ****
  
- // NOTE: To Sync our Prisma schema with the Supabase table, we need to run the command `npx prisma db push`
- // to sync our Supabase database (postgresql) with Prisma Schema 
+// NOTE: Always db push Prisma to our db when this file is changed
+// To Sync our Prisma schema with the Supabase table, we need to run the command `npx prisma db push`
+// this syncs our Supabase database (postgresql) with Prisma Schema 
