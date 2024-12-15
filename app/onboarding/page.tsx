@@ -82,7 +82,7 @@ export default function OnboardingRoute() {
               <Label>Username</Label>
               <div className="flex rounded-md">
                 <span className="inline-flex items-center rounded-l-md border border-r-0 border-muted bg-muted px-3 text-sm text-muted-foreground">
-                  Kalundur.com
+                  Kalundur.com/
                 </span>
                 {/* NOTE: Connecting <Input> with conform so we can get our error messages on the client side*/}
                 <Input
