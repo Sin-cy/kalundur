@@ -4,7 +4,7 @@
 import prisma from "./utils/db";
 import { requireUser } from "./utils/hooks";
 import { parseWithZod } from "@conform-to/zod";
-import { onboardingSchemaValidation, settingsSchema } from "./utils/zodSchemas";
+import { eventTypeSchema, onboardingSchemaValidation, settingsSchema } from "./utils/zodSchemas";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
@@ -209,10 +209,48 @@ export async function updateAvailabilityAction( formData: FormData ) {
             }))
         )
 
-        // revalidatePath("/dashboard/availability");
+        revalidatePath("/dashboard/availability");
 
     } catch (error) {
         console.log(error)
     }
 
+}
+
+
+export async function CreateEventTypeAction( prevState: any , formData : FormData ) {
+    // ensures only authenticated users can make changes
+    // will be used later when creating a new model with prisma below
+    const session = await requireUser()
+
+    // here we need to pass in our formData
+    // which we can get through the params so we can pass it as an arg here
+    const submission = parseWithZod(formData, {
+        // To compare our formData with zod we need to
+        // specify the zod schema we want to compare with formData(Prisma Schema)
+        schema: eventTypeSchema,
+    })
+
+    if(submission.status !== "success") {
+        return submission.reply()
+    }
+
+    // create our mutation for comparision
+    await prisma.eventType.create({
+        data: {
+            title: submission.value.title,
+            duration: submission.value.duration,
+            url: submission.value.url,
+            description: submission.value.description,
+            videoCallSoftware: submission.value.videoCallSoftware,
+            // we also need to add one more thing
+            // relation between User model and this model using userId 
+            // we will use this to make sure that this entry is related to this specific user
+            userId: session.user?.id,
+        },
+    })
+
+    return redirect("/dashboard");
+    // with this Server Side action done
+    // we can go and create a Client Side action using Conform back in our page.tsx
 }

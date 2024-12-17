@@ -1,3 +1,5 @@
+// this zod schema is used to created a Server Action
+// that isn't an inline server action
 import { conformZodMessage } from "@conform-to/zod";
 import { z } from "zod";
 
@@ -78,3 +80,14 @@ export const settingsSchema = z.object({
     profileImage: z.string(),
 })
 // now we can proceed to create the Server Action in our actions.ts based on this Schema
+
+
+// NOTE: Creating a zod schema for EventType
+export const eventTypeSchema = z.object({
+    title: z.string().min(3).max(150),
+    duration: z.number().min(15).max(60),
+    url : z.string().min(3).max(150),
+    description: z.string().min(3).max(300),
+    videoCallSoftware: z.string().min(3),
+})
+// then go to actions.ts file to continue creating the server action

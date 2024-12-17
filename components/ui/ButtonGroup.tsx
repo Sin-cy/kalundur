@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { cn } from "@/lib/utils";
 import { ButtonProps } from "./button";
 import { Children, cloneElement, ReactElement } from "react";
