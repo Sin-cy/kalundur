@@ -12,7 +12,7 @@
     --popover-foreground: 222 13% 18%; /* Same as foreground */
     --primary: 222 87% 66%; /* Tokyonight: blue */
     --primary-foreground: 222 13% 18%; /* Contrast with primary */
-    --secondary: 261 51% 59%; /* Tokyonight: purple */
+    --secondary: 220 14% 88%; /* Light grey with a slight cool tint */
     --secondary-foreground: 222 13% 18%; /* Matches foreground */
     --muted: 225 28% 92%; /* Tokyonight: bg_highlight_light */
     --muted-foreground: 222 13% 50%; /* Muted but readable */
@@ -27,7 +27,7 @@
     --chart-1: 222 87% 66%; /* Tokyonight: blue */
     --chart-2: 160 56% 65%; /* Tokyonight: green */
     --chart-3: 174 64% 60%; /* Tokyonight: teal (replaces yellow) */
-    --chart-4: 261 51% 59%; /* Tokyonight: purple */
+    --chart-4: 220 14% 88%; /* Tokyonight: purple */
     --chart-5: 0 74% 61%; /* Tokyonight: red */ --sidebar-background: 0 0% 98%; --sidebar-foreground: 240 5.3% 26.1%; --sidebar-primary: 240 5.9% 10%; --sidebar-primary-foreground: 0 0% 98%; --sidebar-accent: 240 4.8% 95.9%; --sidebar-accent-foreground: 240 5.9% 10%; --sidebar-border: 220 13% 91%; --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -40,8 +40,8 @@
     --popover-foreground: 222 13% 82%; /* Same as foreground */
     --primary: 222 87% 66%; /* Tokyonight: blue */
     --primary-foreground: 222 28% 16%; /* Contrast with primary */
-    --secondary: 261 51% 59%; /* Tokyonight: purple */
-    --secondary-foreground: 222 13% 82%; /* Matches foreground */
+    --secondary: 220 14% 88%; /* Light grey with a slight cool tint */
+    --secondary-foreground: 220 14% 32%; /* Darker grey for foreground contrast */
     --muted: 222 20% 20%; /* Tokyonight: bg_highlight */
     --muted-foreground: 211 13% 82%; /* Matches foreground */
     --accent: 174 64% 60%; /* Tokyonight: teal (replaces yellow) */
