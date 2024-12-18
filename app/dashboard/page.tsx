@@ -88,6 +88,7 @@ export default async function DashboardPage() {
                 key={item.id}
                 className="show relative overflow-hidden rounded-lg border"
               >
+                {/* NOTE: Drop down menu section */}
                 <div className="absolute right-2 top-2">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
