@@ -4,58 +4,58 @@
 
 @layer base {
   :root {
-    --background: 225 33% 97%; /* Tokyonight: bg_light */
-    --foreground: 222 13% 18%; /* Tokyonight: fg_dark */
-    --card: 225 33% 97%; /* Same as background */
-    --card-foreground: 222 13% 18%; /* Same as foreground */
-    --popover: 225 33% 97%; /* Same as background */
-    --popover-foreground: 222 13% 18%; /* Same as foreground */
-    --primary: 222 87% 66%; /* Tokyonight: blue */
-    --primary-foreground: 222 13% 18%; /* Contrast with primary */
-    --secondary: 220 14% 88%; /* Light grey with a slight cool tint */
-    --secondary-foreground: 222 13% 18%; /* Matches foreground */
-    --muted: 225 28% 92%; /* Tokyonight: bg_highlight_light */
-    --muted-foreground: 222 13% 50%; /* Muted but readable */
-    --accent: 174 64% 60%; /* Tokyonight: teal (replaces yellow) */
-    --accent-foreground: 222 13% 36%; /* Contrast with accent */
-    --destructive: 0 74% 61%; /* Tokyonight: red */
-    --destructive-foreground: 225 33% 97%; /* Light background contrast */
-    --border: 225 28% 87%; /* Subtle border */
-    --input: 225 28% 87%; /* Matches border */
-    --ring: 222 87% 66%; /* Tokyonight: blue */
-    --radius: 0.75rem; /* Unchanged */
-    --chart-1: 222 87% 66%; /* Tokyonight: blue */
-    --chart-2: 160 56% 65%; /* Tokyonight: green */
-    --chart-3: 174 64% 60%; /* Tokyonight: teal (replaces yellow) */
-    --chart-4: 220 14% 88%; /* Tokyonight: purple */
-    --chart-5: 0 74% 61%; /* Tokyonight: red */ --sidebar-background: 0 0% 98%; --sidebar-foreground: 240 5.3% 26.1%; --sidebar-primary: 240 5.9% 10%; --sidebar-primary-foreground: 0 0% 98%; --sidebar-accent: 240 4.8% 95.9%; --sidebar-accent-foreground: 240 5.9% 10%; --sidebar-border: 220 13% 91%; --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: 235 15% 95%; /* Tokyo Night Day background */
+    --foreground: 220 13% 12%; /* Tokyo Night Day foreground */
+    --card: 235 15% 95%; /* Same as background */
+    --card-foreground: 220 13% 12%; /* Same as foreground */
+    --popover: 235 15% 95%; /* Same as background */
+    --popover-foreground: 220 13% 12%; /* Same as foreground */
+    --primary: 217.2 89% 61%; /* Tokyo Night Day blue */
+    --primary-foreground: 210 40% 98%; /* From Shadcn */
+    --secondary: 210 20% 90%; /* Tokyo Night light gray */
+    --secondary-foreground: 220 13% 12%; /* Same as foreground */
+    --muted: 210 40% 96.1%; /* From Shadcn */
+    --muted-foreground: 215.4 16.3% 46.9%; /* From Shadcn */
+    --accent: 217.2 89% 61%; /* Same as primary */
+    --accent-foreground: 220 13% 12%; /* Same as foreground */
+    --destructive: 0 65% 65%; /* Tokyo Night Day red */
+    --destructive-foreground: 220 13% 12%; /* Same as foreground */
+    --border: 220 20% 85%; /* Tokyo Night border */
+    --input: 220 20% 85%; /* Same as border */
+    --ring: 217.2 89% 61%; /* Same as primary */
+    --radius: 0.75rem; /* From Shadcn */
+    --chart-1: 12 76% 61%; /* From Shadcn */
+    --chart-2: 173 58% 39%; /* From Shadcn */
+    --chart-3: 197 37% 24%; /* From Shadcn */
+    --chart-4: 43 74% 66%; /* From Shadcn */
+    --chart-5: 27 87% 67%; /* From Shadcn */
   }
 
   .dark {
-    --background: 222 28% 12%; /* Tokyonight: bg */
-    --foreground: 222 13% 82%; /* Tokyonight: fg */
-    --card: 222 28% 12%; /* Same as background */
-    --card-foreground: 222 13% 82%; /* Same as foreground */
-    --popover: 222 28% 12%; /* Same as background */
-    --popover-foreground: 222 13% 82%; /* Same as foreground */
-    --primary: 222 87% 66%; /* Tokyonight: blue */
-    --primary-foreground: 222 28% 16%; /* Contrast with primary */
-    --secondary: 220 14% 88%; /* Light grey with a slight cool tint */
-    --secondary-foreground: 220 14% 32%; /* Darker grey for foreground contrast */
-    --muted: 222 20% 20%; /* Tokyonight: bg_highlight */
-    --muted-foreground: 211 13% 82%; /* Matches foreground */
-    --accent: 174 64% 60%; /* Tokyonight: teal (replaces yellow) */
-    --accent-foreground: 222 28% 16%; /* Contrast with accent */
-    --destructive: 0 74% 61%; /* Tokyonight: red */
-    --destructive-foreground: 222 13% 82%; /* Matches foreground */
-    --border: 222 20% 20%; /* Tokyonight: bg_highlight */
-    --input: 222 20% 20%; /* Same as border */
-    --ring: 222 87% 66%; /* Tokyonight: blue */
-    --chart-1: 222 87% 66%; /* Tokyonight: blue */
-    --chart-2: 160 56% 65%; /* Tokyonight: green */
-    --chart-3: 174 64% 60%; /* Tokyonight: teal (replaces yellow) */
-    --chart-4: 261 51% 59%; /* Tokyonight: purple */
-    --chart-5: 0 74% 61%; /* Tokyonight: red */ --sidebar-background: 240 5.9% 10%; --sidebar-foreground: 240 4.8% 95.9%; --sidebar-primary: 224.3 76.3% 48%; --sidebar-primary-foreground: 0 0% 100%; --sidebar-accent: 240 3.7% 15.9%; --sidebar-accent-foreground: 240 4.8% 95.9%; --sidebar-border: 240 3.7% 15.9%; --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: 222.2 28% 9%; /* Tokyo Night Night background */
+    --foreground: 210 40% 98%; /* Tokyo Night Night foreground */
+    --card: 222.2 28% 9%; /* Same as background */
+    --card-foreground: 210 40% 98%; /* Same as foreground */
+    --popover: 222.2 28% 9%; /* Same as background */
+    --popover-foreground: 210 40% 98%; /* Same as foreground */
+    --primary: 217.2 91.2% 59.8%; /* Tokyo Night Night blue */
+    --primary-foreground: 222.2 47.4% 11.2%; /* From Shadcn */
+    --secondary: 217.2 32.6% 17.5%; /* Tokyo Night Night gray */
+    --secondary-foreground: 210 40% 98%; /* Same as foreground */
+    --muted: 217.2 32.6% 17.5%; /* From Shadcn */
+    --muted-foreground: 215 20.2% 65.1%; /* From Shadcn */
+    --accent: 217.2 91.2% 59.8%; /* Same as primary */
+    --accent-foreground: 210 40% 98%; /* Same as foreground */
+    --destructive: 0 62.8% 30.6%; /* Tokyo Night Night red */
+    --destructive-foreground: 210 40% 98%; /* Same as foreground */
+    --border: 217.2 32.6% 17.5%; /* Tokyo Night Night border */
+    --input: 217.2 32.6% 27%; /* Lighter, maintaining Tokyo Night Night tone */
+    --ring: 224.3 76.3% 48%; /* Tokyo Night Night ring */
+    --chart-1: 220 70% 50%; /* From Shadcn */
+    --chart-2: 160 60% 45%; /* From Shadcn */
+    --chart-3: 30 80% 55%; /* From Shadcn */
+    --chart-4: 280 65% 60%; /* From Shadcn */
+    --chart-5: 340 75% 55%; /* From Shadcn */
   }
 }
 
