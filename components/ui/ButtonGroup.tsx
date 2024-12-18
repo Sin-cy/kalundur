@@ -22,6 +22,7 @@ export function ButtonGroup({ className, children }: buttonGroupProps) {
 
         // creates a new element
         return cloneElement(child, {
+          key: index,
           className: cn({
             "rounded-l-none": !isFirstItem, // firstItems is not true - no left rounding
             "rounded-r-none": !isLastItem, // lastItems is not true - no right rouding
