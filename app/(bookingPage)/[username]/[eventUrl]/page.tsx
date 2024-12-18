@@ -1,0 +1,104 @@
+import prisma from "@/app/utils/db";
+import { Card, CardContent } from "@/components/ui/card";
+import { CalendarX2, Clock2, VideoIcon } from "lucide-react";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+
+async function getData(eventUrl: string, userName: string) {
+  // using findFirst cuz we dont have a unique identifier
+  const data = await prisma.eventType.findFirst({
+    where: {
+      url: eventUrl,
+      User: {
+        userName: userName,
+      },
+      active: true,
+    },
+    select: {
+      id: true,
+      description: true,
+      title: true,
+      duration: true,
+      videoCallSoftware: true,
+      User: {
+        select: {
+          image: true,
+          name: true,
+          availability: {
+            select: {
+              day: true,
+              isActive: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!data) {
+    return notFound();
+  }
+
+  return data;
+}
+
+// we are destructuring the routes we created inside BookingFormRoute() as params
+export default async function BookingFormRoute({
+  params,
+}: {
+  params: { username: string; eventUrl: string };
+  // we can get them through the params - our dynamic routes username and eventUrl (make sure its spelled exactly the same)
+}) {
+  // getData now requires two properties
+  // now we can pass these params as an arg
+  const data = await getData(params.eventUrl, params.username);
+
+  return (
+    <div className="flex min-h-screen w-screen items-center justify-center">
+      <Card className="mx-auto w-full max-w-[1000px]">
+        {/* this creating the Card Content as a grid is a little tricky */}
+        <CardContent className="md:grid-cols-[1fr, auto, 1fr, auto, 1fr] p-5 md:grid">
+          <div>
+            <Image
+              src={data.User?.image as string}
+              alt="Profile Image of User"
+              priority
+              width={60}
+              height={60}
+              className="rounded-full"
+            />
+            <p className="text-sm font-medium text-muted-foreground mt-2 ">{data.User?.name}</p>
+            <h1 className="text-xl font-semibold mt-2 ">{data.title}</h1>
+            <p className="text-sm font-medium text-muted-foreground ">{data.description}</p>
+
+            <div className="m-5 flex flex-col gap-y-3 Image">
+
+              <p className="flex items-center ">
+                <CalendarX2  className="size-4 mr-2 text-primary"/>
+                <span className="text-sm font-medium text-muted-foreground">
+                  18. December 2024
+                </span>
+              </p>
+
+              <p className="flex items-center ">
+                <Clock2  className="size-4 mr-2 text-primary"/>
+                <span className="text-sm font-medium text-muted-foreground">
+                  {data.duration} Minutes
+                </span>
+              </p>
+
+              <p className="flex items-center ">
+                <VideoIcon  className="size-4 mr-2 text-primary"/>
+                <span className="text-sm font-medium text-muted-foreground">
+                  {data.videoCallSoftware} 
+                </span>
+              </p>
+
+            </div>
+
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
