@@ -33,6 +33,11 @@ async function getData(userId: string) {
       // so we can later pass in an argument from our hook when we call the function
       userId: userId,
     },
+    // HACK: had to add this or else sometimes the Data Render on Client Page gets swapped 
+    // even though the real data is still correct, the render becomes wrong
+    orderBy: {
+      day: 'asc', // Enum ordering as stored in database so the days dont swap out of correct order
+    },
   });
 
   if (!data) {
@@ -77,7 +82,8 @@ export default async function AvailabilityRoute() {
                 {/* NOTE: from our schema isActive can either be true or false */}
                 {/* if isActive is false it wont be checked and vice versa */}
                 <Switch name={`isActive-${item.id}`} defaultChecked={item.isActive} />
-                <p>{item.day}</p>
+                <span>{item.day}</span>
+                <p>{console.log(item.day)}</p>
               </div>
 
               {/* Start Time */}

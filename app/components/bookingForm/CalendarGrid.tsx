@@ -2,13 +2,16 @@ import { useCalendarGrid, useLocale } from 'react-aria';
 import { getWeeksInMonth, DateDuration, endOfMonth } from '@internationalized/date';
 import { CalendarState } from "react-stately"
 import { CalendarCell } from './CalendarCell';
+import { DateValue } from "@react-types/calendar"
 
 export function CalendarGrid({ 
   state, 
   offset = {},
+  isDateUnavailable 
   }:  {
-    state: CalendarState,
-    offset?: DateDuration,
+    state: CalendarState;
+    offset?: DateDuration;
+    isDateUnavailable? : (date: DateValue) => boolean;
   }) {
 
   // calculate the days we have in a month - each month has different end dates
@@ -45,6 +48,7 @@ export function CalendarGrid({
                     state={state}
                     date={date}
                     currentMonth={startDate}
+                    isUnavailable={isDateUnavailable?.(date)}
                   />
                 )
                 : <td key={i} />

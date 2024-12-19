@@ -210,9 +210,11 @@ export async function updateAvailabilityAction( formData: FormData ) {
         )
 
         revalidatePath("/dashboard/availability");
+        return { status: "success", message: "Availability updated successfully" };
 
     } catch (error) {
         console.log(error)
+        return { status: "error", message: "Failed to update availability" };
     }
 
 }
