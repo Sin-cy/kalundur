@@ -1,5 +1,5 @@
-import { Calendar } from "@/app/components/bookingForm/Calendar";
 import prisma from "@/app/utils/db";
+import { RenderCalendar } from "@/app/components/bookingForm/RenderCalendar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CalendarX2, Clock2, VideoIcon } from "lucide-react";
@@ -65,7 +65,7 @@ export default async function BookingFormRoute({
     <div className="flex min-h-screen w-screen items-center justify-center">
       <Card className="mx-auto w-full max-w-[1000px]">
         {/* this creating the Card Content as a grid is a little tricky */}
-        <CardContent className="md:grid-cols-[1fr,auto,1fr,auto,1fr] p-5 md:grid">
+        <CardContent className="md:grid-cols-[1fr,auto,1fr,auto,1fr] p-5 md:grid gap-4 ">
           {/* First Grid Section */}
           <div>
             <Image
@@ -109,11 +109,11 @@ export default async function BookingFormRoute({
           </div>
 
           {/* Second Grid Section (separator) */}
-          <Separator orientation="vertical" className="h-[285px] w-[1px]"/>
+          <Separator orientation="vertical" className="h-[full] w-[1px]"/>
 
 
           {/* Third Grid Section (the custom calendar via React Aria) */}
-          <Calendar />
+          <RenderCalendar />
 
 
         </CardContent>

@@ -44,8 +44,8 @@ export function CalendarHeader({
         <h2>{calendarProps["aria-label"]}</h2>
       </VisuallyHidden>
 
-      <h2 className="font-semibold">
-        {monthName}{" "}
+      <h2 className="font-semibold flex-1">
+        {monthName}{"."}{" "}
         <span className="text-md font-medium text-muted-foreground">
           {year}
         </span>
