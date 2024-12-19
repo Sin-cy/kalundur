@@ -1,3 +1,4 @@
+import { Calendar } from "@/app/components/bookingForm/Calendar";
 import prisma from "@/app/utils/db";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -109,6 +110,11 @@ export default async function BookingFormRoute({
 
           {/* Second Grid Section (separator) */}
           <Separator orientation="vertical" className="h-[285px] w-[1px]"/>
+
+
+          {/* Third Grid Section (the custom calendar via React Aria) */}
+          <Calendar />
+
 
         </CardContent>
       </Card>
