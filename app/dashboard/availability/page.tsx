@@ -83,7 +83,6 @@ export default async function AvailabilityRoute() {
                 {/* if isActive is false it wont be checked and vice versa */}
                 <Switch name={`isActive-${item.id}`} defaultChecked={item.isActive} />
                 <span>{item.day}</span>
-                <p>{console.log(item.day)}</p>
               </div>
 
               {/* Start Time */}

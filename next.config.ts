@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
             // Add any other domains if needed
         ], 
     },
+    reactStrictMode: false, 
     /* config options here */
 };
 

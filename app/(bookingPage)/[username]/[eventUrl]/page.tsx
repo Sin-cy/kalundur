@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { CalendarX2, Clock2, VideoIcon } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { TimeTable } from "@/app/components/bookingForm/TimeTable";
 
 async function getData(eventUrl: string, userName: string) {
   // using findFirst cuz we dont have a unique identifier
@@ -52,6 +53,7 @@ export default async function BookingFormRoute({
   params: { username: string; eventUrl: string };
   searchParams: { date?: string };
   // we can get them through the params - our dynamic routes username and eventUrl (make sure its spelled exactly the same)
+    // whenever our routes are dynamic - we can get the data through the params
 }) {
   // for Next JS 15
   // Await params if it's asynchronous
@@ -135,6 +137,17 @@ export default async function BookingFormRoute({
           <RenderCalendar
             availability={data.User?.availability as any}
           />
+
+          {/* Fourth Grid Section Separator */}
+          <Separator
+            orientation="vertical"
+            className="h-[full] w-[1px]"
+          />
+
+
+          {/* Fifth Grid Section - Time Table */}
+          <TimeTable selectedDate={selectedDate} userName={params.username}/>
+
         </CardContent>
       </Card>
     </div>
