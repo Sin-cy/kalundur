@@ -293,7 +293,7 @@ export async function CreateMeetingAction(formData: FormData ){
     // meetingLength needs to be converted to a number as well (try not converting and see what error shows up)
     const meetingLength = Number(formData.get("meetingLength"));
     // provider is the videoCallSoftware - like goole meets, teams and so on...
-    const provider = formData.get('provider') as string;
+    const provider = formData.get("provider") as string;
 
     // combine fromTime & eventDate into one JS date object
     // as both of these is just a string atm - later on we will convert to Unix so it can work with Nylas
@@ -318,7 +318,7 @@ export async function CreateMeetingAction(formData: FormData ){
             },
             conferencing: {
                 autocreate: {},
-                provider: provider as any , // we dont have provider - so get it with formData
+                provider: provider as any, // we dont have provider - so get it with formData
             },
             participants: [
                 // this will contain the user Inputing the name and email in the TimeTable selected form
@@ -341,3 +341,33 @@ export async function CreateMeetingAction(formData: FormData ){
     // back in our page.tsx 
 }
 
+
+export async function cancelMeetingAction( formData: FormData ){
+    const session = await requireUser()
+
+    const userData = await prisma.user.findUnique({
+        where: {
+            id: session.user?.id,
+        },
+        select: {
+            grantEmail: true,
+            grantId: true,
+        },
+    })
+    
+    if(!userData){
+        throw new Error("User data not found")
+    }
+
+    // nylas api request
+    const data = await nylas.events.destroy({
+        // get eventId through formData params
+        eventId: formData.get("eventId") as string, // checks which event we want to delete
+        identifier: userData.grantId as string,
+        queryParams: {
+            calendarId: userData.grantEmail as string, // id of the calendar where the event has been created
+        },
+    });
+
+    revalidatePath("/dashboard/meetings"); // revalidates the cache, get the new data and update for this path
+}
