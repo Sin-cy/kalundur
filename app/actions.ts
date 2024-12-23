@@ -7,6 +7,7 @@ import { parseWithZod } from "@conform-to/zod";
 import { eventTypeSchema, onboardingSchemaValidation, settingsSchema } from "./utils/zodSchemas";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { nylas } from "./utils/nylas";
 
 // becuz this is not our Routes like /dashboard or /onboarding
 // we dont have to use a export default
@@ -256,3 +257,87 @@ export async function CreateEventTypeAction( prevState: any , formData : FormDat
     // with this Server Side action done
     // we can go and create a Client Side action using Conform back in our page.tsx
 }
+
+export async function CreateMeetingAction(formData: FormData ){
+    const getUserData = await prisma.user.findUnique({
+        where: {
+            userName: formData.get('username') as string,  // we will get the 'username' when configuring the client side <input> hidden
+        },
+        select: {
+            grantEmail: true,
+            grantId: true,
+        },
+    });
+
+
+    if(!getUserData ){
+        throw new Error("User not found")
+    }
+
+
+    // we also need the data for EventType which is title and description
+    const eventTypeData = await prisma.eventType.findUnique({
+        where: {
+            id: formData.get("eventTypeId") as string,// we will get the 'eventTypeId' when configuring the client side <input> hidden
+        },
+        select: {
+            title: true,
+            description: true,
+        },
+    })
+
+
+    // get fromTime & eventDate
+    const fromTime = formData.get("fromTime") as string;
+    const eventDate = formData.get("eventDate") as string;
+    // meetingLength needs to be converted to a number as well (try not converting and see what error shows up)
+    const meetingLength = Number(formData.get("meetingLength"));
+    // provider is the videoCallSoftware - like goole meets, teams and so on...
+    const provider = formData.get('provider') as string;
+
+    // combine fromTime & eventDate into one JS date object
+    // as both of these is just a string atm - later on we will convert to Unix so it can work with Nylas
+    const startDateTime = new Date(`${eventDate}T${fromTime}:00`)
+
+    // end time = startTime + meetingLength
+    // need to get meetingLength through the formData
+    const endDateTime = new Date(startDateTime.getTime() + meetingLength * 60000 ) // * 60000 -> convert minutes to miliseconds 
+
+    // INFO: Creating an API call with Nylas
+    // to create event in Current User calendar and also the Participants Calendar
+    await nylas.events.create({
+        identifier: getUserData.grantId as string,
+        requestBody: {
+            title:  eventTypeData?.title,
+            description: eventTypeData?.description,
+            // we currently dont have startDate - need to get it first
+            when: {
+                // conver standard JS object time from ms to s Unix based time for Nylas
+                startTime: Math.floor(startDateTime.getTime() / 1000 ),
+                endTime: Math.floor(endDateTime.getTime() / 1000 )
+            },
+            conferencing: {
+                autocreate: {},
+                provider: provider as any , // we dont have provider - so get it with formData
+            },
+            participants: [
+                // this will contain the user Inputing the name and email in the TimeTable selected form
+                {
+                    name: formData.get("name") as string,
+                    email: formData.get("email") as string,
+                    status: "yes", // this mean we create an event for this Participant
+                }
+            ],
+        },
+        queryParams: {
+            calendarId: getUserData.grantEmail as string,
+            notifyParticipants: true, // participants will get an email confirmation
+        }
+    });
+
+
+    return redirect("/success");
+    // we can then call this action on the <form> of the 3 grid layout or Participant Form
+    // back in our page.tsx 
+}
+

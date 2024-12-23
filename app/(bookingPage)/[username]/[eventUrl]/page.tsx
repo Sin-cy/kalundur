@@ -9,6 +9,7 @@ import { TimeTable } from "@/app/components/bookingForm/TimeTable";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { SubmitButton } from "@/app/components/SubmitButtons";
+import { CreateMeetingAction } from "@/app/actions";
 
 async function getData(eventUrl: string, userName: string) {
   // using findFirst cuz we dont have a unique identifier
@@ -144,14 +145,28 @@ export default async function BookingFormRoute({
               className="h-[full] w-[1px]"
             />
 
-            <form className="flex flex-col gap-y-4 ">
+            {/* NOTE: Form Data for Participant Form Input */}
+            <form className="flex flex-col gap-y-4 " action={CreateMeetingAction}>
+
+              {/* HACK: add a type input hidden for data handling from CreateMeetingActions() */}
+              <input type="hidden" name="fromTime" value={searchParams.time}/>
+              <input type="hidden" name="eventDate" value={searchParams.date}/>
+
+              {/* HACK: the value is taken from EventType data that we fetched above using Prisma */}
+              <input type="hidden" name="meetingLength" value={data.duration}/> 
+              <input type="hidden" name="provider" value={data.videoCallSoftware}/>
+              <input type="hidden" name="eventTypeId" value={data.id}/>
+
+              {/* HACK: the value is taken from the params we created above in our BookingFormRoute() */}
+              <input type="hidden" name="username" value={params.username}/>
+
               <div className="flex flex-col gap-y-2 mt-5 ">
                 <Label>Your Name</Label>
-                <Input placeholder="Enter Your Name" />
+                <Input name="name" placeholder="Enter Your Name" />
               </div>
               <div className="flex flex-col gap-y-2 ">
                 <Label>Your Email</Label>
-                <Input placeholder="JohnDoe@exmaple.com" />
+                <Input name="email" placeholder="JohnDoe@exmaple.com" />
               </div>
               <SubmitButton className="w-full mt-7" text="Book Meeting" />
 
