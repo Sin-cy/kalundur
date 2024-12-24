@@ -7,7 +7,7 @@ import prisma from "@/app/utils/db";
 import { requireUser } from "@/app/utils/hooks";
 import { notFound } from "next/navigation";
 
-export async function getData(id: string) {
+async function getData(id: string) {
     // const session = await requireUser()
     const data = await prisma.user.findUnique({
         where: {

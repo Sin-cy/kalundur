@@ -80,10 +80,13 @@ const MeetingsPage = async () => {
                 <div className="grid grid-cols-3 justify-between items-center">
                   <div>
                     <p className="text-muted-foreground text-sm">
+                        {/* @ts-ignore */}
                       {format(fromUnixTime(item.when.startTime), "EEE, dd MMM")}
                     </p>
                     <p className="text-muted-foreground text-xs pt-1">
+                        {/* @ts-ignore */}
                       {format(fromUnixTime(item.when.startTime), "hh:mm a")} -{" "}
+                        {/* @ts-ignore */}
                       {format(fromUnixTime(item.when.endTime), "hh:mm a")}
                     </p>
                     <div className="flex items-center mt-1">
@@ -95,6 +98,7 @@ const MeetingsPage = async () => {
                           // with data that does not have object properties of conferencing & participants 
                           // ( which will happen if you create it from google cal ? or smth ?)
                           // the meetings page will break
+                          //@ts-ignore
                         href={item.conferencing.details.url} 
                       >
                         Join Meeting

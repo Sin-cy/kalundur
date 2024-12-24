@@ -10,7 +10,9 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 
-export default async function DeleteEventType({ params }: { params: { eventTypeId: string } }) {
+export default async function DeleteEventType({ params }: { params: Promise<{ eventTypeId: string }> }) {
+  const eventTypeId = (await params).eventTypeId
+
   return (
     <div className="flex flex-1 items-center justify-center">
       <Card className="w-full max-w-[400px]">
@@ -26,7 +28,7 @@ export default async function DeleteEventType({ params }: { params: { eventTypeI
           </Button>
           <form action={DeleteEventTypeAction} >
             {/* to get the value, becuz the route is dynamic - we can get the route name through the params */}
-            <input type="hidden" name="id" value={params.eventTypeId} />
+            <input type="hidden" name="id" value={eventTypeId} />
             <SubmitButton text="Delete Event" variant="destructive" />
           </form>
         </CardFooter>

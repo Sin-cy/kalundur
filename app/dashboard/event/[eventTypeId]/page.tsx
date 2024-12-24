@@ -25,8 +25,9 @@ async function getData(eventTypeId: string) {
 }
 
 // make sure eventTypeId is spelled exactly like how we created the folder [eventTypeId]
-const EditRoute = async ({ params }: { params: { eventTypeId: string } }) => {
-    const data = await getData(params.eventTypeId);
+const EditRoute = async ({ params }: { params: Promise<{ eventTypeId: string }> }) => {
+  const eventTypeId = (await params).eventTypeId
+    const data = await getData(eventTypeId);
     // we need conform for this (break it into component)
     // we cant mark this file as use client cuz we are fetching data, this is a server component
     return (

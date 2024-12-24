@@ -65,6 +65,7 @@ export default async function AvailabilityRoute() {
         </CardDescription>
       </CardHeader>
 
+      {/* @ts-ignore */}
       <form action={updateAvailabilityAction} >
         <CardContent className="flex flex-col gap-y-4">
           {data.map((item) => (

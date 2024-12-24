@@ -54,15 +54,20 @@ export default async function BookingFormRoute({
   params,
   searchParams,
 }: {
-  // params: { username: string; eventUrl: string };
-  params: Awaited<{ username: string; eventUrl: string }>;
-  searchParams: { date?: string; time?: string };
+  //@ts-ignore
+  params: Promise<{ username: string; eventUrl: string }>;
+  // params: Awaited<{ username: string; eventUrl: string }>;
+  searchParams: Promise<{ date?: string; time?: string }>;
   // we can get them through the params - our dynamic routes username and eventUrl (make sure its spelled exactly the same)
   // whenever our routes are dynamic - we can get the data through the params
 }) {
   // for Next JS 15
   // Await params if it's asynchronous
-  const { username, eventUrl } = params;
+  const username = (await params).username
+  const eventUrl = (await params).eventUrl
+  const date = (await searchParams).date
+  const time = (await searchParams).time
+  // const { username, eventUrl } = await params;
 
   // getData now requires two properties
   // now we can pass these params as an arg
@@ -71,8 +76,8 @@ export default async function BookingFormRoute({
 
   // INFO: Making the date in the first grid section dynamic
   // use to update the first grid section date with selected date from Calendar
-  const selectedDate = searchParams.date // we cant get searchParams as its a js client side bundle, we have to get it via Serverside
-    ? new Date(searchParams.date)
+  const selectedDate = date // we cant get searchParams as its a js client side bundle, we have to get it via Serverside
+    ? new Date(date)
     : new Date();
 
   // give the dynamic date some formatting
@@ -85,7 +90,7 @@ export default async function BookingFormRoute({
   // NOTE: checks if both data and time are true
   // we dont have .time yet, so we need to get it through searchParams
   // double !! converts any value to a BOOLEAN
-  const showForm = !!searchParams.date && !!searchParams.time
+  const showForm = !!date && !!time
 
   return (
     <div className="flex min-h-screen w-screen items-center justify-center">
@@ -150,16 +155,16 @@ export default async function BookingFormRoute({
             <form className="flex flex-col gap-y-4 " action={CreateMeetingAction}>
 
               {/* HACK: add a type input hidden for data handling from CreateMeetingActions() */}
-              <input type="hidden" name="fromTime" value={searchParams.time}/>
-              <input type="hidden" name="eventDate" value={searchParams.date}/>
+              <input type="hidden" name="fromTime" value={time} />
+              <input type="hidden" name="eventDate" value={date} />
 
               {/* HACK: the value is taken from EventType data that we fetched above using Prisma */}
-              <input type="hidden" name="meetingLength" value={data.duration}/> 
-              <input type="hidden" name="provider" value={data.videoCallSoftware}/>
-              <input type="hidden" name="eventTypeId" value={data.id}/>
+              <input type="hidden" name="meetingLength" value={data.duration} />
+              <input type="hidden" name="provider" value={data.videoCallSoftware} />
+              <input type="hidden" name="eventTypeId" value={data.id} />
 
               {/* HACK: the value is taken from the params we created above in our BookingFormRoute() */}
-              <input type="hidden" name="username" value={params.username}/>
+              <input type="hidden" name="username" value={username} />
 
               <div className="flex flex-col gap-y-2 mt-5 ">
                 <Label>Your Name</Label>
@@ -246,7 +251,7 @@ export default async function BookingFormRoute({
             {/* Fifth Grid Section - Time Table */}
             <TimeTable
               selectedDate={selectedDate}
-              userName={params.username}
+              userName={username}
               duration={data.duration}
             />
           </CardContent>

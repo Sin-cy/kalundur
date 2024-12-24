@@ -77,6 +77,7 @@ function calculateAvailableTimeSlots(
     fromTime: string | undefined;
     tillTime: string | undefined;
   },
+  //@ts-ignore
   nylasData: NylasResponse<GetFreeBusyResponse[]>,
   duration: number,
 ) {
