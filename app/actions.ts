@@ -371,3 +371,36 @@ export async function cancelMeetingAction( formData: FormData ){
 
     revalidatePath("/dashboard/meetings"); // revalidates the cache, get the new data and update for this path
 }
+
+export async function EditEventTypeAction(prevState: any,formData: FormData){
+    const session =  await requireUser()
+    
+
+    // compare formData (Prisma Schema) with Zod Schema
+    const submission = parseWithZod(formData , {
+        // specify the eventTypeSchema as the schema we want to use from zodSchema
+        schema: eventTypeSchema, 
+    })
+
+    if(submission.status !== "success"){
+        return submission.reply()
+    }
+
+    const data = await prisma.eventType.update({
+        where: {
+            id: formData.get("id") as string,
+            userId: session.user?.id,
+        },
+        data: {
+            title: submission.value.title,
+            duration: submission.value.duration,
+            url: submission.value.url,
+            description: submission.value.description,
+            videoCallSoftware: submission.value.videoCallSoftware,
+        },
+    });
+
+    // redirect user to dashboard once the mutation is complete
+    return redirect("/dashboard");
+
+}
