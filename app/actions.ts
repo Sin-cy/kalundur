@@ -445,3 +445,18 @@ export async function UpdateEventTypeStatusAction( prevState: any,{
         };
     }
 }
+
+
+// NOTE: Server Action for Delete Event Button
+export async function DeleteEventTypeAction(formData: FormData){
+    const session = await requireUser()
+    const data = await prisma.eventType.delete({
+        // we want to delete a specific event type
+        where: {
+            id: formData.get("id") as string, // dont forget to add the id as a hidden input on delete/page.tsx
+            userId: session.user?.id, // only the current user should be able to delete the event
+        },
+    });
+
+    return redirect("/dashboard");
+}

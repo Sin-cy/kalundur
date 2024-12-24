@@ -20,7 +20,7 @@ export function MenuActiveSwitch({
     // HACK: useTransition must be the first thing that runs or else the button dont state gets stuck on disabled in this case
 
     const [state, action] = useActionState(
-        UpdateEventTypeStatusAction,
+        UpdateEventTypeStatusAction, // dont forget to add prevState: any to it
         undefined,
     );
 
