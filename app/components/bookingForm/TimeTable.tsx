@@ -100,6 +100,7 @@ function calculateAvailableTimeSlots(
   )
 
   // this equals to nylas data which we have to get first
+  // @ts-ignore
   const busySlots = nylasData.data[0].timeSlots.map((slot) => (
     {
       start: fromUnixTime(slot.startTime),
