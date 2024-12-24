@@ -56,7 +56,7 @@ export function EditEventForm({
   // get data using Conform with the help of React hook
   // HACK: dont forget add a param - `prevState: any` inside our CreateEventTypeAction() function back in action.ts page
   const [lastResult, action] = useActionState(
-    EditEventTypeAction, // dont forget to pass prevState: any as a param inside EditEventTypeAction
+    EditEventTypeAction, // NOTE: dont forget to pass prevState: any as a param inside EditEventTypeAction
     undefined,
   );
 
