@@ -54,20 +54,20 @@ export default async function BookingFormRoute({
   params,
   searchParams,
 }: {
-  params: { username: string; eventUrl: string };
+  // params: { username: string; eventUrl: string };
+  params: Awaited<{ username: string; eventUrl: string }>;
   searchParams: { date?: string; time?: string };
   // we can get them through the params - our dynamic routes username and eventUrl (make sure its spelled exactly the same)
   // whenever our routes are dynamic - we can get the data through the params
 }) {
   // for Next JS 15
   // Await params if it's asynchronous
-  // const { username, eventUrl } = await params;
+  const { username, eventUrl } = params;
 
   // getData now requires two properties
   // now we can pass these params as an arg
   // change params.evenUrl & params.username for Next Js 15
-  const data = await getData(params.eventUrl, params.username);
-  console.log(data)
+  const data = await getData(eventUrl, username);
 
   // INFO: Making the date in the first grid section dynamic
   // use to update the first grid section date with selected date from Calendar
