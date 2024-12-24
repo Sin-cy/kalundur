@@ -3,7 +3,7 @@ import { EmptyState } from "@/app/components/EmptyState";
 import { SubmitButton } from "@/app/components/SubmitButtons";
 import { auth } from "@/app/utils/auth";
 import prisma from "@/app/utils/db";
-import { requireUser } from "@/app/utils/hooks";
+// import { requireUser } from "@/app/utils/hooks";
 import { nylas } from "@/app/utils/nylas";
 import {
   Card,
@@ -49,12 +49,12 @@ async function getData(userId: string) {
 
 // safe to use async as this is a server component
 const MeetingsPage = async () => {
-  const session = await requireUser();
-  const data = await getData(session.user?.id as string);
+  const session = await auth();
+  const data = await getData(session?.user?.id as string);
 
   // console.log(data.data[0].conferencing.details.url)
 
-  console.log(data.data[0])
+  // console.log(data.data)
 
   return (
     <>
