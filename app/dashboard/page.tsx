@@ -19,6 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import CopyLinkMenuItem from "../components/CopyLinkMenu";
+import { MenuActiveSwitch } from "../components/EventTypeSwitcher";
 
 async function getData(userId: string) {
   const data = await prisma.user.findUnique({
@@ -102,36 +103,36 @@ export default async function DashboardPage() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel> Event </DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuGroup>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuGroup>
 
-                          <DropdownMenuItem asChild>
-                            {/* HACK: the booking route will look similar to this localhost:3000/username/even-url */}
-                            {/* this is why we redirect the user to this path */}
-                            <Link href={`/${data.userName}/${item.url}`}>
-                              <ExternalLink className="mr-2 size-4 " />
-                              Preview
-                            </Link>
-                          </DropdownMenuItem>
-                          {/* Copy Component for EventTypes Page */}
-                          <CopyLinkMenuItem meetingUrl={`${process.env.NEXT_PUBLIC_URL}/${data.userName}/${item.url}`}/>
-
-                          <DropdownMenuItem asChild>
-                            {/* this redirect us back to [eventTypeId]/page.tsx route */}
-                            <Link href={`/dashboard/event/${item.id}`}>
-                              <Pen className="mr-2 size-4" />
-                              Edit
-                            </Link>
-                          </DropdownMenuItem>
-
-                        </DropdownMenuGroup>
-
-                        <DropdownMenuSeparator />
-
-                        <DropdownMenuItem>
-                          <Trash className="mr-2 size-4 " />
-                          Delete
+                        <DropdownMenuItem asChild>
+                          {/* HACK: the booking route will look similar to this localhost:3000/username/even-url */}
+                          {/* this is why we redirect the user to this path */}
+                          <Link href={`/${data.userName}/${item.url}`}>
+                            <ExternalLink className="mr-2 size-4 " />
+                            Preview
+                          </Link>
                         </DropdownMenuItem>
+                        {/* Copy Component for EventTypes Page */}
+                        <CopyLinkMenuItem meetingUrl={`${process.env.NEXT_PUBLIC_URL}/${data.userName}/${item.url}`} />
+
+                        <DropdownMenuItem asChild>
+                          {/* this redirect us back to [eventTypeId]/page.tsx route */}
+                          <Link href={`/dashboard/event/${item.id}`}>
+                            <Pen className="mr-2 size-4" />
+                            Edit
+                          </Link>
+                        </DropdownMenuItem>
+
+                      </DropdownMenuGroup>
+
+                      <DropdownMenuSeparator />
+
+                      <DropdownMenuItem>
+                        <Trash className="mr-2 size-4 " />
+                        Delete
+                      </DropdownMenuItem>
 
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -156,12 +157,14 @@ export default async function DashboardPage() {
                   </div>
                 </Link>
                 <div className="flex items-center justify-between bg-muted px-5 py-3">
-                  <Switch />
+                  {/* render switch component */}
+                  <MenuActiveSwitch initialChecked={item.active} eventTypeId={item.id} />
+
                   <Button asChild >
-                      {/* we can grab the href we created above and use it here */}
-                      {/* this also is an edit button so it will work the same */}
-                      <Link href={`/dashboard/event/${item.id}`}>Edit Event</Link>
-                    </Button>
+                    {/* we can grab the href we created above and use it here */}
+                    {/* this also is an edit button so it will work the same */}
+                    <Link href={`/dashboard/event/${item.id}`}>Edit Event</Link>
+                  </Button>
                 </div>
               </div>
             ))}
